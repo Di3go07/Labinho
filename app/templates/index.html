@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+<head>
+</head>
+
+{% block content %}
+    {% if user %}
+        <h1>Olá, {{ user.username }}!</h1>
+        <p>Seu cargo: {{ user.cargo }}</p>
+    {% else %}
+        <h1>Olá, deseja fazer login? <a href="{{ url_for('login')}}"> Clique aqui </a></h1>
+    {% endif %}
+{% endblock %}

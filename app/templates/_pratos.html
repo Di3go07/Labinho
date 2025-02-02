@@ -1,0 +1,24 @@
+<h3> {{prato.nome}} </h3> 
+<p> {{prato.descricao}}</p>
+<p> Valor: R${{prato.valor}}</p>
+<img src="{{ url_for('static', filename='imagens/Imagens cardapio/' + prato.imagem.lower()) }}" width="150px">
+
+{% if user.cargo == 'Gerente' or user.cargo == 'Funcionário'%}
+<div>
+    <form action="{{ url_for('excluirPrato', id=prato.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este prato?');">
+        <button type="submit"><i class='bx bxs-trash'></i>Excluir</button>
+    </form>
+    <form action="{{ url_for('editarPrato', id=prato.id) }}" method="POST">
+        <button type="submit"><i class='bx bxs-pencil'></i>Editar</button>
+    </form>
+</div>    
+{% endif %}
+{% if user.cargo == 'Cliente'%}
+    <form action="{{ url_for('adicionarPrato', id=prato.id) }}" method="POST">
+        <div>
+            <button type="submit"><i class='bx bxs-cart'></i>Comprar</button>
+        </div>
+    </form>
+{% endif %}
+
+ 

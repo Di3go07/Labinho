@@ -1,0 +1,16 @@
+<img src="{{ url_for('static', filename='imagens/Imagens cardapio/' + imagem.lower()) }}" width="150px">
+
+<h3> {{nome}} </h3> 
+<p> {{descricao}}</p>
+<p> Valor: R${{carrinho.valor_total}}</p>
+<p> Quantidade: {{carrinho.quantidade}}</p>
+<form action="{{ url_for('adicionar', id=carrinho.id) }}" method="POST">
+    <button type="submit">+</button>
+</form>
+<form action="{{ url_for('retirar', id=carrinho.id) }}" method="POST">
+    <button type="submit">-</button>
+</form>
+<form action="{{ url_for('excluirPedido', id=carrinho.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este pedido?');">
+    <button type="submit"><i class='bx bxs-trash'></i>Excluir</button>
+</form>
+

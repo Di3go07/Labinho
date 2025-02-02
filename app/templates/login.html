@@ -1,0 +1,42 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <title>Login </title>
+</head>
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <hr> 
+{% endif %}
+{% endwith %}
+
+    <div class="login-container">
+        <h1>Login</h1>
+        <form action="" method="post">
+            <div>
+                <label for="username">Usuário:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div>
+                <label for="password">Senha:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div>
+                <label for="remember">
+                    <input type="checkbox" id="remember" name="remember">
+                    Lembrar de mim
+                </label>    
+            </div>
+            <p>Novo usuário? <a href="{{ url_for('registro') }}">Clique aqui para registrar!</a></p>
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

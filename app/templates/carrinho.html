@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2> Carrinho </h2>
+
+{% for carrinho, descricao, nome, imagem in carrinho %}
+    {% include '_produto.html' %}
+{% endfor %}
+
+{% if total !=  0%}
+    <h3> Total: {{total}}</h3>
+    <div>
+        <form action="" method="POST">
+            <button type="submit">Pedir</button>
+        </form>
+    </div>  
+{%endif%}
+
+{% if total ==  0 %}
+    <h3> Carrinho vazio... acesse o <a href="{{ url_for('cardapio')}}">cardapio</a> para fazer seu pedido </h3>
+{%endif%}
+
+
+
+{% endblock %}
