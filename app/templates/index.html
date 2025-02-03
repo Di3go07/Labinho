@@ -1,8 +1,4 @@
-
-{% extends "base.html" %}
-
-<head>
-</head>
+{% extends "card.html" %}
 
 {% block content %}
     {% if user %}
@@ -11,4 +7,5 @@
     {% else %}
         <h1>Olá, deseja fazer login? <a href="{{ url_for('login')}}"> Clique aqui </a></h1>
     {% endif %}
+
 {% endblock %}

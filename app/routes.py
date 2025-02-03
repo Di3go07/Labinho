@@ -9,10 +9,14 @@ from app import alquimias
 from app.models.models import Cardapio, Carrinho
 from sqlalchemy import func
 
-### ROTA PARA INDEX
+### --- INDEX --- ###
+
 @app.route('/')
 @app.route('/index')
 def index():
+    '''
+    Renderiza a página index do site
+    '''
     if 'username' in session:  # Verifica se o usuário está logado
         username = session['username']
         cargo = alquimias.resgatar_cargo(username)  # Obtém o cargo do usuário
@@ -21,16 +25,26 @@ def index():
         user = None
         cargo = 'cliente'
 
+    pagina = 'LABINHO PIZZARIA E RESTAURANTE'
+    texto='A melhor parmegiana de Itabira!'
+
     return render_template(
         'index.html', 
         title='Home', 
+        pagina=pagina,
+        texto=texto,
         user=user,
         cargo = cargo
     )
 
-### ROTA PARA LOGIN 
+
+### --- LOGIN --- ###
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    '''
+    Renderiza a página de login do site para logar um usuário
+    '''
     if 'username' in session: #realiza logout caso tenha algum usuário na sessão
         session.pop('username', None)  
         session.pop('cargo', None)
@@ -57,9 +71,15 @@ def login():
     
     return render_template('login.html', title="Login")
 
-### ROTA PARA REGISTRAR
+
+
+###  --- REGISTRAR --- ###
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
+    '''
+    Renderiza a página de registro do site para criar um novo usuário
+    '''
     if request.method == 'POST':
         username = request.form['username'].lower()
         password = request.form['password'].lower()
@@ -83,75 +103,12 @@ def registro():
         return render_template('registro.html', title=registro)
 
     
-### ROTA PARA CARDAPIO
-@app.route('/cardapio')
-def cardapio():
-    if 'username' in session:  # Verifica se o usuário está logado
-        username = session['username']
-        cargo = alquimias.resgatar_cargo(username)  # Obtém o cargo do usuário
-        user = {'username': username, 'cargo': cargo}  # Passa o cargo para o template
-    else:
-        user = None
-        cargo = 'cliente'
-
-    individuais = Cardapio.query.filter_by(tipo="Individual").limit(4).all()
-    porcoes = Cardapio.query.filter_by(tipo="Porção").limit(4).all()
-    bebidas = Cardapio.query.filter_by(tipo="Bebida").limit(4).all()
-
-
-    return render_template('cardapio.html', title='Cardapio', individuais=individuais, porcoes=porcoes, bebidas=bebidas, user=user)
-
-### ROTA PARA UM TIPO NO CARDAPIO
-@app.route('/cardapio/<tipo>')
-def cardapioCompleto(tipo):
-    if 'username' in session:  # Verifica se o usuário está logado
-        username = session['username']
-        cargo = alquimias.resgatar_cargo(username)  # Obtém o cargo do usuário
-        user = {'username': username, 'cargo': cargo}  # Passa o cargo para o template
-    else:
-        user = None
-        cargo = 'cliente'
-
-    cardapio = Cardapio.query.filter_by(tipo=tipo).all()
-
-    return render_template('cardapio_completo.html',  title=tipo, user=user, cardapio=cardapio)
-
-### ROTA PARA REGISTRAR CARDAPIO
-@app.route('/cadastro/cardapio', methods=['GET', 'POST'])
-def registroCardapio():   
-    if 'username' not in session:
-            user = None
-            return redirect(url_for('index'))
-
-    if 'username' in session:
-        username = session['username']
-        cargo = alquimias.resgatar_cargo(username)
-        user = {'username': username, 'cargo': cargo}
-
-        if user['cargo'].lower() != 'gerente' and  user['cargo'].lower() != 'funcionário':
-            return redirect(url_for('index'))
-
-    if request.method == 'POST':
-        valido, mensagem = alquimias.valida_prato(request.form)
-        
-        if valido:
-            nome = request.form['nome'].capitalize()
-            tipo = request.form['tipo'].capitalize() 
-            valor = request.form['valor'].capitalize() 
-            descricao = request.form['descricao'].capitalize() 
-            imagem = request.form['imagem'].capitalize()
-
-            alquimias.create_prato(nome, tipo, valor, descricao, imagem)
-            flash(f'Prato registrado com sucesso!')
-            return redirect(url_for('cardapio'))
-        else:
-            flash(mensagem)
-
-    return render_template('registrar_prato.html', title='Registro', user=user)
-
-### ROTA PARA ALTERAR CARGO
+### --- CARGO --- ###
 @app.route('/cadastro/user', methods=['GET', 'POST'])
-def alterarCargo():  
+def alterarCargo(): 
+    '''
+    Renderiza a página apenas para gerentes alterarem o cargo de algum usuário
+    ''' 
     if 'username' not in session:
             user = None
             return redirect(url_for('index'))
@@ -191,9 +148,91 @@ def alterarCargo():
 
     return render_template('mudar_cargo.html', title='Atualização', user=user)
 
-### ROTA PARA EXCLUIR DO CARDAPIO
+
+### --- CARDAPIO --- ###
+
+@app.route('/cardapio')
+def cardapio():
+    '''
+    Renderiza a página do cardapio do restaurante  
+    '''
+    if 'username' in session:  # Verifica se o usuário está logado
+        username = session['username']
+        cargo = alquimias.resgatar_cargo(username)  # Obtém o cargo do usuário
+        user = {'username': username, 'cargo': cargo}  # Passa o cargo para o template
+    else:
+        user = None
+        cargo = 'cliente'
+
+    individuais = Cardapio.query.filter_by(tipo="Individual").limit(4).all()
+    porcoes = Cardapio.query.filter_by(tipo="Porção").limit(4).all()
+    bebidas = Cardapio.query.filter_by(tipo="Bebida").limit(4).all()
+
+    pagina = 'CARDÁPIO'
+    texto = 'Conheça nossos pratos'
+
+    return render_template('cardapio.html', title='Cardapio', pagina=pagina, texto=texto, individuais=individuais, porcoes=porcoes, bebidas=bebidas, user=user)
+
+@app.route('/cardapio/<tipo>')
+def cardapioCompleto(tipo):
+    '''
+    Renderiza uma página de cardapio com um tipo específico entre bebidas, porções e individuais
+    '''
+    if 'username' in session:  # Verifica se o usuário está logado
+        username = session['username']
+        cargo = alquimias.resgatar_cargo(username)  # Obtém o cargo do usuário
+        user = {'username': username, 'cargo': cargo}  # Passa o cargo para o template
+    else:
+        user = None
+        cargo = 'cliente'
+
+    cardapio = Cardapio.query.filter_by(tipo=tipo).all()
+
+    pagina = tipo.upper()
+    texto = 'Conheça mais opções de pratos'
+
+    return render_template('cardapio_completo.html', pagina=pagina, texto=texto, title=tipo, user=user, cardapio=cardapio)
+
+@app.route('/cadastro/cardapio', methods=['GET', 'POST'])
+def registroCardapio():   
+    '''
+    Essa URL renderiza um formulário para cadastrar um novo produto
+    '''
+    if 'username' not in session:
+            user = None
+            return redirect(url_for('index'))
+
+    if 'username' in session:
+        username = session['username']
+        cargo = alquimias.resgatar_cargo(username)
+        user = {'username': username, 'cargo': cargo}
+
+        if user['cargo'].lower() != 'gerente' and  user['cargo'].lower() != 'funcionário':
+            return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        valido, mensagem = alquimias.valida_prato(request.form)
+        
+        if valido:
+            nome = request.form['nome'].capitalize()
+            tipo = request.form['tipo'].capitalize() 
+            valor = request.form['valor'].capitalize() 
+            descricao = request.form['descricao'].capitalize() 
+            imagem = request.form['imagem'].capitalize()
+
+            alquimias.create_prato(nome, tipo, valor, descricao, imagem)
+            flash(f'Prato registrado com sucesso!')
+            return redirect(url_for('cardapio'))
+        else:
+            flash(mensagem)
+
+    return render_template('registrar_prato.html', title='Registro', user=user)
+
 @app.route('/excluir_prato/<int:id>', methods=['POST'])
 def excluirPrato(id):
+    '''
+    Essa URL resgata o id de algum prato no banco de dados e acessa uma query para exclui-lo
+    '''
     if 'username' not in session:
             user = None
             return redirect(url_for('index'))
@@ -215,9 +254,11 @@ def excluirPrato(id):
         flash(mensagem)
         return redirect(url_for('cardapio'))
 
-### ROTA PARA EDITAR PRODUTO
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editarPrato(id):
+    '''
+    Essa URL resgata o id de algum prato no banco de dados do cardapio e acessa uma query para edita-lo
+    '''
     # Verifica se o usuário está logado na sessão
     if 'username' not in session:
         return redirect(url_for('index'))  # Se não estiver, redireciona para a página principal
@@ -284,9 +325,14 @@ def editarPrato(id):
         flash('Prato não encontrado', 'error')
         return redirect(url_for('index'))  # Se o prato não for encontrado, redireciona para o index
 
-### ROTA PARA RENDERIZAR CARRINHO
+
+### --- CARRINHO --- ###
+
 @app.route('/carrinho', methods=['GET', 'POST'])
 def carrinho():
+    '''
+    Renderiza a página com o carrinho do usuário ao acessar a tabela relação entre user e cardapio
+    '''
     if 'username' in session:  # Verifica se o usuário está logado
         username = session['username']
         cargo = alquimias.resgatar_cargo(username)
@@ -296,7 +342,7 @@ def carrinho():
 
     id_user = alquimias.resgatar_id(username)
 
-    #JOIN para buscar as informações do produto no carrinho
+    #JOIN entre as tabelas Carrinho e Cardapio para buscar as informações do produto no carrinho
     carrinho = db.session.query(Carrinho, Cardapio.descricao, Cardapio.nome, Cardapio.imagem) \
         .join(Cardapio, Carrinho.produto_id == Cardapio.id) \
         .filter(Carrinho.user_id == id_user) \
@@ -319,9 +365,11 @@ def carrinho():
         total=total
     )
 
-### ROTA PARA ADICIONAR AO CARRINHO
 @app.route('/adicionar/<int:id>', methods=['POST'])
 def adicionarPrato(id):
+    '''
+    URL acionado por um botão para inserir o produto no carrinho do usuário, desse modo, ela precisa do id do produto e do usuário da sessão
+    '''
     if 'username' not in session:
         user = None
         return redirect(url_for('login'))
@@ -338,9 +386,11 @@ def adicionarPrato(id):
         flash(mensagem)
         return redirect(url_for('cardapio'))
 
-### ROTA PARA EXCLUIR DO CARRINHO
 @app.route('/excluir_pedido/<int:id>', methods=['POST'])
 def excluirPedido(id):
+    '''
+    URL acionada por um botão para excluir um item do carrinho
+    '''
     if 'username' not in session:
             user = None
             return redirect(url_for('index'))
@@ -354,9 +404,11 @@ def excluirPedido(id):
         flash(mensagem)
         return redirect(url_for('carrinho'))
 
-### ROTA PARA ALTERAR A QUANTIDADE
 @app.route('/aumentar/<int:id>', methods=['POST'])
 def adicionar(id):
+    '''
+    URL que resgata o id do produto para acessa-lo no banco e adicionar à sua quantidade
+    '''
     if 'username' not in session:
             user = None
             return redirect(url_for('index'))
@@ -370,6 +422,9 @@ def adicionar(id):
         return redirect(url_for('carrinho'))
 @app.route('/reduzir/<int:id>', methods=['POST'])
 def retirar(id):
+    '''
+    URL que resgata o id do produto para acessa-lo no banco e retirar um da sua quantidade
+    '''
     if 'username' not in session:
             user = None
             return redirect(url_for('index'))

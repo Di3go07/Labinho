@@ -13,6 +13,7 @@ def validate_user_password(username , password):
     return res and res.password == password
 
 def validar_adm_password(adm, password):
+    '''Testa se a senha do usuário fornecida está correta'''
     res = db.session.scalars(select(User).where(User.username == adm))
     res = res.first()
 
@@ -37,18 +38,21 @@ def create_user(username, password, email, cargo='Cliente', remember=False):
     db.session.commit()
 
 def resgatar_id(username):
+    '''Ao receber o nome de um usuário, a função retorna seu id no banco'''
     res = db.session.scalars(select(User).where(User.username == username))
     res = res.first()
     
     return res.id
 
 def resgatar_cargo(username):
+    '''Ao receber o nome de um usuário, a função retorna o cargo dele'''
     res = db.session.scalars(select(User).where(User.username == username))
     res = res.first()
     
     return res.cargo
 
 def atualiza_cargo(username, cargo):
+    '''Recebe um usuário e um cargo para atualizar seu status no banco caso os dados sejam validados'''
     res = db.session.scalars(select(User).where(User.username == username))
     res = res.first()
 
@@ -60,9 +64,8 @@ def atualiza_cargo(username, cargo):
     else:
         return False, 'Escolha entre cliente, funcionário ou gerente'
 
-
-
 def valida_prato(form):
+    '''Recebe o formulário de cadastro de um produto e verifica se os dados estão corretos'''
     campos_obrigatorios = ['nome', 'tipo', 'valor', 'descricao', 'imagem']
     tipos_validos = ["Porção", "Individual", "Bebida"]
 
@@ -91,6 +94,7 @@ def valida_prato(form):
     return True, ''
 
 def create_prato(nome, tipo, valor, descricao, imagem):
+    '''Função que adiciona um novo pedido ao cardapio'''
     new_prato = Cardapio(
         nome=nome,
         tipo=tipo,
@@ -102,16 +106,16 @@ def create_prato(nome, tipo, valor, descricao, imagem):
     db.session.add(new_prato)
     db.session.commit()
 
-#resgata informações dos pratos
 def info_pratos(id):
+    '''Essa função recebe o id de um prato e retorna todos seus campos na tabela em forma de lista, mas retorna False caso ele não exista'''
     prato = db.session.scalars(select(Cardapio).where(Cardapio.id == id)).first()
     if prato:
         return [prato.nome, prato.descricao, prato.tipo, prato.valor, prato.imagem]
     else:
         return False
 
-#excluir prato
 def excluir_prato(id):
+    '''Função que recebe o id de um produto e o remove do banco'''
     try:
         prato = db.session.scalars(select(Cardapio).where(Cardapio.id == id)).first()
         db.session.delete(prato)
@@ -121,8 +125,8 @@ def excluir_prato(id):
     except:
         return False, 'Falha ao remover produto'
     
-#edita prato
 def editar_prato(id, nome, tipo, valor, descricao, imagem):
+    '''Atualiza no banco de dados todos os campos de uma linha com base nas novas informações recebidas'''
     try:
         prato = db.session.scalars(select(Cardapio).where(Cardapio.id == id)).first()
         if prato:
@@ -139,8 +143,8 @@ def editar_prato(id, nome, tipo, valor, descricao, imagem):
     except:
         return False
 
-#adicionar à tabela carrinho
 def adicionar_carrinho(userId, produtoId, quantidade):
+    '''Função recebe o id de um usuario e de um produto para criar uma relação entre eles em uma nova tabela, assim, cria o carrinho no site'''
     try:
         produto = db.session.scalars(select(Cardapio).where(Cardapio.id == produtoId)).first()
         valor_total = produto.valor * quantidade
@@ -160,8 +164,8 @@ def adicionar_carrinho(userId, produtoId, quantidade):
     except:
         return False, 'Falha ao salvar produto'
     
-#excluir pedido do carrinho
 def excluir_pedido(id):
+    '''A função recebe o id de um pedido da tabela de carrinho e remove o pedido'''
     try:
         pedido = db.session.scalars(select(Carrinho).where(Carrinho.id == id)).first()
         if pedido:
@@ -174,8 +178,8 @@ def excluir_pedido(id):
     except:
         return False, 'Falha ao remover produto'  
     
-#alterar a quantidade
 def adicionar(id):
+        '''Recebe o id de um pedido e adiciona um à sua quantidade'''
         pedido = db.session.scalars(select(Carrinho).where(Carrinho.id == id)).first()
         pedido.quantidade += 1
 
@@ -189,6 +193,7 @@ def adicionar(id):
 
         return True
 def retirar(id):
+        '''Recebe o id de um pedido e remove um de sua quantidade'''
         pedido = db.session.scalars(select(Carrinho).where(Carrinho.id == id)).first()
         if pedido.quantidade <= 1:
             return False
