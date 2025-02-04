@@ -1,10 +1,10 @@
 # Projetos II <br> Labinho
 
-## Apresentação
+## 📋 Apresentação
 O grupo desenvolveu um site para a máteria de Projetos II do curso Projeto Desenvolve Itabira para atender as demandas de um restaurante da cidade chamado Labinho. Diante disso, incorporamos no site um 
 banco de dados para cadastro de clientes e produtos, hierarquia em cargos, uma interface dinâmica e atrativa e um carrinho para os usuários fazerem seus pedidos. 
 
-## Projeto
+## 🛠️ Projeto
 Conheça a estrutura do nosso projeto
 
 ```
@@ -31,7 +31,7 @@ Labinho/
 └── requirements.txt
 ```
 
-## Site
+## 🌐 Site
 O site possui uma database com três tabelas: usuários, cardápio e carrinho. A primeira armazena os usuários cadastrados no sistema do restaurante, sendo esses dividos em três cargos diferentes, podendo assumir funções diferente como cliente, funcionário ou gerente. <br>
 Por exemplo, o cliente é o único que pode adicionar itens ao carrinho, o funcionário pode adicionar pratos ao cardápio e o gerente pode também alterar o cargo de usuários no site. Na tabela 'users.csv' existem alguns usuários já cadastrados que podem ser acessados após popular o banco de dados, possibilitando testar essa hierarquia de cargo presente no site.
 
@@ -43,7 +43,7 @@ Por exemplo, o cliente é o único que pode adicionar itens ao carrinho, o funci
 
 Caso deseje usar esse usuários, lembre-se de na página de login preencher os campos com as informações acima 
 
-## Começando
+## 🏁 Começando
 Como abrir o nosso projeto na web
 
 1. Baixe o repósitorio 'Labinho' completo
@@ -61,7 +61,7 @@ Como abrir o nosso projeto na web
    pip install -r requirements.txt
    ```
 
-## Configurações
+## ⚙️ Configurações
 Antes de prosseguir, é necessário configurar o Flask no terminal
 
 1. No caminho raiz do projeto, no mesmo diretório que 'config.py', crie um arquivo chamado ".flaskenv" com sua chave secreta
@@ -82,14 +82,14 @@ Antes de prosseguir, é necessário configurar o Flask no terminal
    set FLASK_APP=app.py
    ```
 
-## Popular o banco
+## 💾 Popular o banco
 Para ter uma experiência do site em funcionamento, popule o banco de dados para ter uma ideia de como ele ficaria em uma estrutura final hospedado em um servidor web
 
 1. Execute popular_db.py no terminal
-    ```
+   ```
    python popular_db.py
    ```
-## Processando
+## 🖥️ Processando
 Para finalizar, ative o flask para carregar o servidor web em sua máquina
 
 1. No terminal, digite:
