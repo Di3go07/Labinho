@@ -2,7 +2,7 @@
 
 ## Apresentação
 O grupo desenvolveu um site para a máteria de Projetos II do curso Projeto Desenvolve Itabira para atender as demandas de um restaurante da cidade chamado Labinho. Diante disso, incorporamos no site um 
-banco de dados para cadastro de clientes e produtos, uma interface dinâmica e atrativa e um carrinho para os usuários fazerem seus pedidos. 
+banco de dados para cadastro de clientes e produtos, hierarquia em cargos, uma interface dinâmica e atrativa e um carrinho para os usuários fazerem seus pedidos. 
 
 ## Projeto
 Conheça a estrutura do nosso projeto
@@ -30,6 +30,18 @@ Labinho/
 ├── popular_db.py
 └── requirements.txt
 ```
+
+## Site
+O site possui uma database com três tabelas: usuários, cardápio e carrinho. A primeira armazena os usuários cadastrados no sistema do restaurante, sendo esses dividos em três cargos diferentes, podendo assumir funções diferente como cliente, funcionário ou gerente. <br>
+Por exemplo, o cliente é o único que pode adicionar itens ao carrinho, o funcionário pode adicionar pratos ao cardápio e o gerente pode também alterar o cargo de usuários no site. Na tabela 'users.csv' existem alguns usuários já cadastrados que podem ser acessados após popular o banco de dados, possibilitando testar essa hierarquia de cargo presente no site.
+
+| id  | username     | password      | email                  | cargo       | remember |
+| --- | ------------ | ------------- | ---------------------- | ----------- | -------- |
+| 1   | gerente      | gerente123    | gerente@gmail.com      | Gerente     | 0        |
+| 2   | funcionario  | funcionario123| teste123@example.com   | Funcionário | 0        |
+| 3   | cliente      | cliente123    | cliente@example.com    | Cliente     | 0        |
+
+Caso deseje usar esse usuários, lembre-se de na página de login preencher os campos com as informações acima 
 
 ## Começando
 Como abrir o nosso projeto na web
