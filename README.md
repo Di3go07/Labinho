@@ -64,7 +64,7 @@ Como abrir o nosso projeto na web
 ## ⚙️ Configurações
 Antes de prosseguir, é necessário configurar o Flask no terminal
 
-1. No caminho raiz do projeto, no mesmo diretório que 'config.py', crie um arquivo chamado ".flaskenv" com sua chave secreta
+1. Abra o VsCode e no caminho raiz do projeto, no mesmo diretório que 'config.py', crie um arquivo chamado ".flaskenv" com sua chave secreta
    ```
    SECRET_KEY=3f9d0d8c17e544d99b27693d99fd845d
    ```
