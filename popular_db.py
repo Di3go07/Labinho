@@ -3,7 +3,7 @@ from app import app, db, User, Cardapio  # Importe seu app e modelos
 
 #Popular Cardapio
 with app.app_context():
-    with open('app\\tabelas\\cardapio.csv', mode='r') as file:
+    with open('app\\tabelas\\cardapio.csv', mode='r', encoding='utf-8') as file:
         csv_reader = csv.DictReader(file)
 
         for row in csv_reader:
@@ -25,7 +25,7 @@ with app.app_context():
 
 #Popular usuários
 with app.app_context():
-    with open('app\\tabelas\\users.csv', mode='r') as file:
+    with open('app\\tabelas\\users.csv', mode='r',  encoding='utf-8') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
 
