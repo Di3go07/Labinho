@@ -21,14 +21,15 @@ Labinho/
 │   │    ├── css/
 │   │    ├── css_mobile/
 │   │    ├── imagens/
-│   │    ├── javascript/
-│   ├── init.py
-│   ├── alquimias.py
+│   │    └── javascript/
+│   ├── __init__.py
+│   ├── routes.py
+│   └── alquimias.py
 ├── config.py
 ├── microblog.py
 ├── popular_db.py
-├── requirements.txt
-
+└── requirements.txt
+```
 
 
 
