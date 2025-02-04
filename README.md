@@ -1,7 +1,7 @@
 # Projetos II <br> Labinho
 
 ## 📋 Apresentação
-O grupo desenvolveu um site para a máteria de Projetos II do curso Projeto Desenvolve Itabira para atender as demandas de um restaurante da cidade chamado Labinho. Diante disso, incorporamos no site um 
+O grupo desenvolveu um site para a matéria de Projetos II do curso Projeto Desenvolve Itabira para atender as demandas de um restaurante da cidade chamado Labinho. Diante disso, incorporamos no site um 
 banco de dados para cadastro de clientes e produtos, hierarquia em cargos, uma interface dinâmica e atrativa e um carrinho para os usuários fazerem seus pedidos. 
 
 ## 🛠️ Projeto
