@@ -48,17 +48,27 @@ Como abrir o nosso projeto na web
 
 1. Baixe o repósitorio 'Labinho' completo
 2. Navegue ao diretório do projeto no terminnal
-3. Crie um ambiente virtual no diretório 'flask_env'
+3. Crie um ambiente virtual no diretório 'flask_env' <br>
    ```
    python -m venv flask_env
    ```
-4. Ative o ambiente
+5. Ative o ambiente <br>
+   Windows:
    ```
    flask_env\Scripts\activate
    ```
-5. Baixe as bibliotecas
+   Linux:
+   ```
+   source ./flask_env/bin/activate
+   ```
+7. Baixe as bibliotecas <br>
+   Windows:
    ```
    pip install -r requirements.txt
+   ```
+   Linux:
+   ```
+   python3 -m  pip install -r requirements.txt --break-system-packages
    ```
 
 ## ⚙️ Configurações
@@ -78,17 +88,28 @@ Antes de prosseguir, é necessário configurar o Flask no terminal
     ```
    flask db upgrade
    ```
+   Windows:
    ```
    set FLASK_APP=app.py
+   ```
+   Linux:
+   ```
+   export FLASK_APP=app.py
    ```
 
 ## 💾 Popular o banco
 Para ter uma experiência do site em funcionamento, popule o banco de dados para ter uma ideia de como ele ficaria em uma estrutura final hospedado em um servidor web
 
 1. Execute popular_db.py no terminal
+   Windows:
    ```
    python popular_db.py
    ```
+   Linux:
+   ```
+   python3 popular_db.py
+   ```
+   
 ## 🖥️ Processando
 Para finalizar, ative o flask para carregar o servidor web em sua máquina
 
