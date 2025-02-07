@@ -123,6 +123,23 @@ Aproveite o site!
 ## 👨‍💻 Desenvolvedores
 Membros do grupo responsáveis pela criação do projeto
 
+Rafael Pastor #PD009
+Desing
+
+Joao Vitor Moreira#PD079
+Javascript
+
+Diego Penna Andrade Barros#PD274
+Backend
+
+Frederico Matheus Costa Duarte#PD284
+Midia-query
+
+Isabela Maria De Sá Teixeira#PD341
+Midia-query
+
+
+
 
 
 
